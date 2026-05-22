@@ -1,4 +1,3 @@
-package com.objectville.game;
 
 public abstract class UtilityBuilding implements UtilityProvider {
     private String utilityType;
