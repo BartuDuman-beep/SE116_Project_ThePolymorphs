@@ -1,30 +1,20 @@
 
-public abstract class UtilityBuilding implements UtilityProvider {
+public abstract class UtilityBuilding extends Cell implements UtilityProvider {
     private String utilityType;
     private int capacity;
     private int remainingCapacity;
-    private int row;
-    private int column;
 
 
-    public UtilityBuilding(String utilityType, int capacity,int remainingCapacity, int row, int column) {
+    public UtilityBuilding(int x, int y, char symbol,String utilityType, int capacity,int remainingCapacity) {
+        super(x, y, symbol);
         this.utilityType = utilityType;
         this.capacity=capacity;
-        this.row=row;
-        this.column=column;
         this.remainingCapacity=remainingCapacity;
 
 
     }
 
 
-    public int getColumn() {
-        return column;
-    }
-
-    public int getRow() {
-        return row;
-    }
 
 
     public int getCapacity() {
