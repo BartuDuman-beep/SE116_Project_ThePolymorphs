@@ -4,6 +4,9 @@ public class CityGrid {
     public CityGrid(Cell[][] grid) {
         this.grid = grid;
     }
+    public Cell[][] getGrid(){
+        return grid;
+    }
 
     public void resetZone() {
         for (int i = 0; i < grid.length; i++) {
