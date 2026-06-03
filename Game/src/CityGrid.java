@@ -1,4 +1,8 @@
 public class CityGrid {
+    public static final char POWER_PLANT = 'P';
+    public static final char WATER_PUMPING_STATION = 'W';
+    public static final char INTERNET_HUB = 'T';
+
     private Cell[][] grid;
 
     public CityGrid(Cell[][] grid) {
@@ -20,28 +24,35 @@ public class CityGrid {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
 
-                if (grid[i][j] instanceof Zone sourceZone) { //Checks whether the current cell is related to Zone or not
+                if (grid[i][j] instanceof Zone sourceZone) { //Checks whether the current cell is empty or not
 
                     char symbol = sourceZone.getSymbol();
                     int radius = 0;
 
                     if (symbol == 'F') radius = 5; // Police station (security)
-
                     if (symbol == 'D') radius = 3; // Hospital (health)
-
                     if (symbol == 'S') radius = 4; // School (education)
 
-                    if (symbol == 'F' || symbol == 'D' || symbol == 'S') {
-                        for (int x = 0; x < grid.length; x++) {
-                            for (int y = 0; y < grid[x].length; y++) {
+                    if (radius > 0) {
+                        for (int x = 0; x < grid.length; x++) { //x coordinate for targetZone
+                            for (int y = 0; y < grid[x].length; y++) { //y coordinate for targetZone
+
                                 if (grid[x][y] instanceof Zone targetZone) {
 
-                                    int distance = Math.abs (i-x) + Math.abs (j-y); // Manhattan distance
+                                    int distance = Math.abs(i - x) + Math.abs(j - y); // Manhattan distance
 
-                                    if (distance < radius) {
-                                        if (symbol == 'F') targetZone.security = true;
-                                        if (symbol == 'D') targetZone.health = true;
-                                        if (symbol == 'S') targetZone.education = true;
+                                    if (distance <= radius) {
+                                        switch (symbol) {
+                                            case 'F':
+                                                targetZone.security = true;
+                                                break;
+                                            case 'D':
+                                                targetZone.health = true;
+                                                break;
+                                            case 'S':
+                                                targetZone.education = true;
+                                                break;
+                                        }
                                     }
                                 }
                             }
@@ -51,4 +62,139 @@ public class CityGrid {
             }
         }
     }
+
+    public void distributeUtilities() {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+
+                if (grid[i][j] instanceof Zone sourceZone) {
+
+                    char symbol = sourceZone.getSymbol();
+
+                    if (symbol == POWER_PLANT) {
+                        runBFS(i, j, "electricity", sourceZone);
+                    }
+                    else if (symbol == WATER_PUMPING_STATION) {
+                        runBFS(i, j, "water", sourceZone);
+                    }
+                    else if (symbol == INTERNET_HUB) {
+                        runBFS(i, j, "internet", sourceZone);
+                    }
+                }
+            }
+        }
+    }
+    private void addNeighbor(int nextX, int nextY, Queue<Cell> queue, boolean[][] visited) {
+        if (nextX >= 0 && nextX < grid.length && nextY >= 0 && nextY < grid[0].length) {
+            //the X and Y values cannot be equal to grid.length because arrays start from value 0 that's why it may throw arrayindexoutofbounds exception
+
+            if (!visited[nextX][nextY] && grid[nextX][nextY] instanceof Zone) {
+                //we call Zone instead of targetZone because there may be more than one sourceZone, and we only call one of them at the beginning
+                queue.add(grid[nextX][nextY]);
+                visited[nextX][nextY] = true;
+            }
+        }
+    }
+    private void runBFS(int startX, int startY, String utilityType, Zone sourceZone) {
+        //this method provides to run all the 3 utility types in 1 hand
+        Queue<Cell> queue = new LinkedList<Cell>();
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        int currentCapacity = 100;
+
+        queue.add(sourceZone); //each utility is added
+        visited[startX][startY] = true; //i and j are now invalid so we use new variables in their place
+
+        while (!queue.isEmpty()) {
+
+            if (currentCapacity <= 0) {
+                break; //exit the loop immediately
+            }
+            Cell currentCell = queue.poll();
+            //currentCell is defined here because it must become an old cell that received utility after being a currentCell, this means that we should remove it from the queue after having utility
+
+            if (currentCell instanceof Zone targetZone) {
+                int demand = Math.max(1, targetZone.getUtilityDemand());
+
+                if (demand > 0 && currentCapacity > 0) {
+                    int assignedUtility = Math.min(demand, currentCapacity);
+
+                    if (utilityType.equals("electricity")) {
+                        targetZone.receiveElectricity(assignedUtility);
+                    }
+                    else if (utilityType.equals("water")) {
+                        targetZone.receiveWater(assignedUtility);
+                    }
+                    else if (utilityType.equals("internet")) {
+                        targetZone.receiveInternet(assignedUtility);
+                    }
+                    currentCapacity -= assignedUtility;
+                }
+            }
+            addNeighbor(currentCell.getX() - 1, currentCell.getY(), queue, visited);
+            addNeighbor(currentCell.getX() + 1, currentCell.getY(), queue, visited);
+            addNeighbor(currentCell.getX(), currentCell.getY() - 1, queue, visited);
+            addNeighbor(currentCell.getX(), currentCell.getY() + 1, queue, visited);
+        }
+    }
+    public void accumulateProduction () {
+        int totalPopulation = 0;
+        int totalGoods = 0;
+        int totalLifestyle = 0;
+
+        int houseCount = 0;
+        int industrialCount = 0;
+        int commercialCount = 0;
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                Cell cell = grid[i][j];
+
+                //the red ones will be written in house, industrial and commercial classes
+
+                if (cell instanceof House house) {
+                  totalPopulation += house.getGeneratedPopulation();
+                  houseCount++;
+                }
+                else if (cell instanceof Industrial industrial) {
+                    totalGoods += industrial.getGeneratedGoods();
+                    industrialCount++;
+                }
+                else if (cell instanceof Commercial commercial) {
+                    totalLifestyle += commercial.getGeneratedLifestyle();
+                    commercialCount++;
+                }
+            }
+        }
+        distributeResources(totalPopulation, totalGoods, totalLifestyle, houseCount, industrialCount, commercialCount);
+    }
+    private void distributeResources (int totalPopulation, int totalGoods, int totalLifestyle, int houseCount, int industrialCount, int commercialCount) {
+
+        int distributePopulation = (industrialCount + commercialCount > 0) ? (totalPopulation / (industrialCount + commercialCount)): 0;
+        // in case of not having any house zone, result will be zero, to prevent denominator being zero
+        int distributeGoods = (commercialCount > 0) ? (totalGoods / commercialCount) : 0;
+        int distributeLifestyle = (houseCount > 0) ? (totalLifestyle / houseCount) : 0;
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                Cell cell = grid[i][j]; //this cell object provides to hold the current matrix cell
+
+                if (cell instanceof Industrial industrial) {
+                    industrial.setConsumedPopulation (distributePopulation);
+                    // set function tells industrial building to update its current data with the given reference which is distributePopulation here
+                }
+                if (cell instanceof Commercial commercial) {
+                    commercial.setConsumedPopulation (distributePopulation);
+                    commercial.setConsumedGoods (distributeGoods);
+                }
+                if (cell instanceof House house) {
+                    house.setConsumedLifestyle (distributeLifestyle);
+                }
+            }
+        }
+    }
+    @Override
+    public void updateZone () { //this method will be called from simulation class
+
+    }
 }
+
