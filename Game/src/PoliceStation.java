@@ -1,6 +1,6 @@
 public class PoliceStation extends ServiceProvider{
     public PoliceStation(int x, int y) {
-            super(x, y,5);
+            super(x, y,'F');
         }
         @Override
         public char getSymbol() {
