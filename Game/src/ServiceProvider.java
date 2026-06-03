@@ -5,6 +5,5 @@ public abstract class ServiceProvider extends Cell {
 
     public ServiceProvider(int x, int y, char symbol) {
         super(x, y, symbol);
-
     }
 }
