@@ -6,7 +6,7 @@ public class CityGrid {
     public static final char WATER_PUMPING_STATION = 'W';
     public static final char INTERNET_HUB = 'T';
 
-    private Cell[][] grid;
+    public Cell[][] grid;
 
     public CityGrid(Cell[][] grid) {
         this.grid = grid;
@@ -87,7 +87,7 @@ public class CityGrid {
         }
     }
 
-    private void addNeighbor(int nextX, int nextY, Queue<Cell> queue, boolean[][] visited) {
+    public void addNeighbor(int nextX, int nextY, Queue<Cell> queue, boolean[][] visited) {
         if (nextX >= 0 && nextX < grid.length && nextY >= 0 && nextY < grid[0].length) {
             //the X and Y values cannot be equal to grid.length because arrays start from value 0 that's why it may throw arrayindexoutofbounds exception
 
@@ -99,7 +99,7 @@ public class CityGrid {
         }
     }
 
-    private void runBFS(int startX, int startY, String utilityType, UtilityBuilding provider) {
+    public void runBFS(int startX, int startY, String utilityType, UtilityBuilding provider) {
         //this method provides to run all the 3 utility types in 1 hand
         Queue<Cell> queue = new LinkedList<Cell>();
         boolean[][] visited = new boolean[grid.length][grid[0].length];
@@ -165,7 +165,7 @@ public class CityGrid {
                 distributeResources(totalPopulation, totalGoods, totalLifestyle, houseCount, industrialCount, commercialCount);
             }
         }
-        private void distributeResources ( int totalPopulation, int totalGoods, int totalLifestyle, int houseCount,
+        public void distributeResources ( int totalPopulation, int totalGoods, int totalLifestyle, int houseCount,
         int industrialCount, int commercialCount){
 
             int distributePopulation = (industrialCount + commercialCount > 0) ? (totalPopulation / (industrialCount + commercialCount)) : 0;
