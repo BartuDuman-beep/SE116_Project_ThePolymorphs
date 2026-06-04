@@ -36,7 +36,7 @@ public class CityGrid {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
 
-                if (grid[i][j] instanceof Zone sourceZone) { //Checks whether the current cell is empty or not
+                if (grid[i][j] instanceof objectville.services.ServiceProvider sourceZone) { //Checks whether the current cell is empty or not
 
                     char symbol = sourceZone.getSymbol();
                     int radius = 0;
@@ -52,7 +52,7 @@ public class CityGrid {
                                 if (grid[x][y] instanceof Zone targetZone) {
 
                                     int distance = Math.abs(i - x) + Math.abs(j - y); // Manhattan distance
-                                    String zoneName = sourceZone.getClass().getSimpleName();
+                                    String zoneName = targetZone.getClass().getSimpleName();
                                     if(zoneName.equals("Housing")) zoneName = "House";
                                     if (distance <= radius) {
                                         switch (symbol) {
@@ -101,10 +101,10 @@ public class CityGrid {
 
     public void addNeighbor(int nextX, int nextY, Queue<Cell> queue, boolean[][] visited) {
         if (nextX >= 0 && nextX < grid.length && nextY >= 0 && nextY < grid[0].length) {
+            Cell c = grid[nextX][nextY];
+            if (!visited[nextX][nextY] && (c instanceof Zone|| c instanceof objectville.city.Road ||  c instanceof UtilityBuilding )) {
 
-            if (!visited[nextX][nextY] && grid[nextX][nextY] instanceof Zone) {
-
-                queue.add(grid[nextX][nextY]);
+                queue.add(c);
                 visited[nextX][nextY] = true;
             }
         }
@@ -145,14 +145,15 @@ public class CityGrid {
                         targetZone.receiveInternet(assignedUtility);
                         System.out.println(zoneName+" at ("+targetZone.getX()+","+targetZone.getY()+") received "+assignedUtility+" internet");
 
-                        provider.consume(assignedUtility);
                     }
+                    provider.consume(assignedUtility);
                 }
-                addNeighbor(currentCell.getX() - 1, currentCell.getY(), queue, visited);
-                addNeighbor(currentCell.getX() + 1, currentCell.getY(), queue, visited);
-                addNeighbor(currentCell.getX(), currentCell.getY() - 1, queue, visited);
-                addNeighbor(currentCell.getX(), currentCell.getY() + 1, queue, visited);
+
             }
+            addNeighbor(currentCell.getX() - 1, currentCell.getY(), queue, visited);
+            addNeighbor(currentCell.getX() + 1, currentCell.getY(), queue, visited);
+            addNeighbor(currentCell.getX(), currentCell.getY() - 1, queue, visited);
+            addNeighbor(currentCell.getX(), currentCell.getY() + 1, queue, visited);
         }
     }
         public void accumulateProduction () {
@@ -179,8 +180,8 @@ public class CityGrid {
                         commercialCount++;
                     }
                 }
-                distributeResources(totalPopulation, totalGoods, totalLifestyle, houseCount, industrialCount, commercialCount);
             }
+            distributeResources(totalPopulation, totalGoods, totalLifestyle, houseCount, industrialCount, commercialCount);
         }
         public void distributeResources ( int totalPopulation, int totalGoods, int totalLifestyle, int houseCount,
         int industrialCount, int commercialCount){
