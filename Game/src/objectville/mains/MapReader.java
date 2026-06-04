@@ -64,7 +64,7 @@ public class MapReader {
 
                 char symbol = line.charAt(col);
                 grid[row][col] =
-                        createCell(col, row, symbol);
+                        createCell(row, col, symbol);
             }
             }
         }
