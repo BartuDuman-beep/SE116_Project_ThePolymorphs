@@ -101,10 +101,9 @@ public class CityGrid {
 
     public void addNeighbor(int nextX, int nextY, Queue<Cell> queue, boolean[][] visited) {
         if (nextX >= 0 && nextX < grid.length && nextY >= 0 && nextY < grid[0].length) {
-            //the X and Y values cannot be equal to grid.length because arrays start from value 0 that's why it may throw arrayindexoutofbounds exception
 
             if (!visited[nextX][nextY] && grid[nextX][nextY] instanceof Zone) {
-                //we call objectville.zones.Zone instead of targetZone because there may be more than one sourceZone, and we only call one of them at the beginning
+
                 queue.add(grid[nextX][nextY]);
                 visited[nextX][nextY] = true;
             }
@@ -112,9 +111,9 @@ public class CityGrid {
     }
 
     public void runBFS(int startX, int startY, String utilityType, UtilityBuilding provider) {
-        //this method provides to run all the 3 utility types in 1 hand
-        Queue<Cell> queue = new LinkedList<Cell>();
+
         boolean[][] visited = new boolean[grid.length][grid[0].length];
+        Queue <Cell> queue = new LinkedList<>();
 
         queue.add(grid[startX][startY]); //each utility is added
         visited[startX][startY] = true; //i and j are now invalid so we use new variables in their place
@@ -135,6 +134,7 @@ public class CityGrid {
 
                     String zoneName = targetZone.getClass().getSimpleName();
                     if(zoneName.equals("Housing")) zoneName = "House";
+
                     if (utilityType.equals("electricity")) {
                         targetZone.receiveElectricity(assignedUtility);
                         System.out.println(zoneName+" at ("+targetZone.getX()+","+targetZone.getY()+") received "+assignedUtility+" electricity");
