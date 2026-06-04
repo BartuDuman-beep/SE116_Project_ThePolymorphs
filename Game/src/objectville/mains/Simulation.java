@@ -6,7 +6,7 @@ import objectville.zones.Zone;
 
 public class Simulation {
     private Cell[][] grid;
-    private int currentTick = 1;
+    private int totalTicks;
     private CityGrid citygrid;
     //to call methods that are in citygrid, we should define it as an object here!
 
@@ -15,36 +15,33 @@ public class Simulation {
         this.citygrid = citygrid;
     }
 
-    public void nextTick() {
 
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+    public void runTick() {
+        for (int i = 0; i < totalTicks; i++) {
+            System.out.println("Tick" + (i + 1));
 
-                if (grid[i][j] instanceof Zone zone) {
 
-                    zone.resetReceivedValues();
-                    //reseting the values that come from the previous tour
+            citygrid.distributeServices();
+
+            citygrid.distributeUtilities();
+
+            citygrid.accumulateProduction();
+
+            //these functions are inside 2 for loops in the citygrid class so we do not need extra 2 for loops
+
+            for (int x = 0; x < grid.length; x++) {
+                for (int y = 0; y < grid[0].length; y++) {
+
+                    if (grid[x][y] instanceof Zone zone) {
+
+                        zone.updateLevel();
+
+                        zone.resetReceivedValues();
+                        //reseting the values that come from the previous tour
+                    }
                 }
             }
         }
-        citygrid.distributeServices();
-
-        citygrid.distributeUtilities ();
-
-        citygrid.accumulateProduction();
-
-        citygrid.distributeResources(0, 0, 0, 0, 0, 0);
-        //these functions are inside 2 for loops in the citygrid class so we do not need extra 2 for loops
-
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-
-                if (grid[i][j] instanceof Zone zone) {
-
-                    zone.updateLevel();
-                }
-            }
-        }
-        currentTick++;
     }
 }
+
