@@ -133,12 +133,17 @@ public class CityGrid {
                 if (demand > 0 && provider.getRemainingCapacity() > 0) {
                     int assignedUtility = Math.min(demand, provider.getRemainingCapacity());
 
+                    String zoneName = targetZone.getClass().getSimpleName();
+                    if(zoneName.equals("Housing")) zoneName = "House";
                     if (utilityType.equals("electricity")) {
                         targetZone.receiveElectricity(assignedUtility);
+                        System.out.println(zoneName+" at ("+targetZone.getX()+","+targetZone.getY()+") received "+assignedUtility+" electricity");
                     } else if (utilityType.equals("water")) {
                         targetZone.receiveWater(assignedUtility);
+                        System.out.println(zoneName+" at ("+targetZone.getX()+","+targetZone.getY()+") received "+assignedUtility+" water");
                     } else if (utilityType.equals("internet")) {
                         targetZone.receiveInternet(assignedUtility);
+                        System.out.println(zoneName+" at ("+targetZone.getX()+","+targetZone.getY()+") received "+assignedUtility+" internet");
 
                         provider.consume(assignedUtility);
                     }
