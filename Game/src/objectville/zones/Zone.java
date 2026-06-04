@@ -102,13 +102,23 @@ public abstract class Zone extends Cell {
 
     protected void increaseLevel() {
         if (level < 3) {
+            int oldLevel = level;
             level++;
+            String zoneName = this.getClass().getSimpleName();
+            if(zoneName.equals("Housing")) zoneName = "House";
+
+            System.out.println(zoneName+" at ("+x+","+y+") levels up from "+oldLevel+" to "+level);
         }
     }
 
     protected void decreaseLevel() {
         if (level > 0) {
+            int oldLevel = level;
             level--;
+            String zoneName = this.getClass().getSimpleName();
+            if(zoneName.equals("Housing")) zoneName = "House";
+
+            System.out.println(zoneName+" at ("+x+","+y+") levels down from "+oldLevel+" to "+level);
         }
     }
 
