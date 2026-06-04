@@ -1,3 +1,6 @@
+package objectville.zones;
+
+import objectville.city.Cell;
 
 public abstract class Zone extends Cell {
 
@@ -20,6 +23,18 @@ public abstract class Zone extends Cell {
         super(x,y,symbol);
         this.level = 0;
         this.output = 0;
+    }
+
+    public void setSecurity(boolean security) {
+        this.security = security;
+    }
+
+    public void setHealth(boolean health) {
+        this.health = health;
+    }
+
+    public void setEducation(boolean education) {
+        this.education = education;
     }
 
     public boolean isZone() {

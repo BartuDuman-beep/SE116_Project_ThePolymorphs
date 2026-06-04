@@ -1,3 +1,4 @@
+package objectville.city;
 
 public abstract class Cell {
     protected int x;

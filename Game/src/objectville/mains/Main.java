@@ -1,3 +1,8 @@
+package objectville.mains;
+
+import objectville.city.Cell;
+import objectville.city.CityGrid;
+
 import java.io.IOException;
 
 public class Main {

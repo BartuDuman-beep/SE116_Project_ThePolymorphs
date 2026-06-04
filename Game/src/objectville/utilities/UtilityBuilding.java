@@ -1,4 +1,7 @@
+package objectville.utilities;
 
+
+import objectville.city.Cell;
 
 public abstract class UtilityBuilding extends Cell implements UtilityProvider {
     private int capacity;

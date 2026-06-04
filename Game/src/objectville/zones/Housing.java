@@ -1,3 +1,5 @@
+package objectville.zones;
+
 public class Housing extends Zone {
 
     public Housing(int x, int y) {

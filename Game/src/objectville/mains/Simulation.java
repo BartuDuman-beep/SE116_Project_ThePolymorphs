@@ -1,3 +1,9 @@
+package objectville.mains;
+
+import objectville.city.Cell;
+import objectville.city.CityGrid;
+import objectville.zones.Zone;
+
 public class Simulation {
     private Cell[][] grid;
     private int currentTick = 1;

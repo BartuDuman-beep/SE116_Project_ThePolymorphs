@@ -1,3 +1,6 @@
+package objectville.services;
+
+import objectville.city.Cell;
 
 public abstract class ServiceProvider extends Cell {
     protected int radius;

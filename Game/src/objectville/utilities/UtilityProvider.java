@@ -1,3 +1,5 @@
+package objectville.utilities;
+
 public interface UtilityProvider {
     int getCapacity();
     int getRemainingCapacity();

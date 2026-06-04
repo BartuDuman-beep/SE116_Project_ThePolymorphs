@@ -1,3 +1,11 @@
+package objectville.city;
+
+import objectville.utilities.UtilityBuilding;
+import objectville.zones.Commercial;
+import objectville.zones.Housing;
+import objectville.zones.Industrial;
+import objectville.zones.Zone;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -34,8 +42,8 @@ public class CityGrid {
                     int radius = 0;
 
                     if (symbol == 'F') radius = 5; // Police station (security)
-                    if (symbol == 'D') radius = 3; // services.Hospital (health)
-                    if (symbol == 'S') radius = 4; // services.School (education)
+                    if (symbol == 'D') radius = 3; // services.objectville.services.Hospital (health)
+                    if (symbol == 'S') radius = 4; // services.objectville.services.School (education)
 
                     if (radius > 0) {
                         for (int x = 0; x < grid.length; x++) { //x coordinate for targetZone
@@ -48,13 +56,13 @@ public class CityGrid {
                                     if (distance <= radius) {
                                         switch (symbol) {
                                             case 'F':
-                                                targetZone.security = true;
+                                                targetZone.setSecurity(true);
                                                 break;
                                             case 'D':
-                                                targetZone.health = true;
+                                                targetZone.setHealth(true);
                                                 break;
                                             case 'S':
-                                                targetZone.education = true;
+                                                targetZone.setEducation(true);
                                                 break;
                                         }
                                     }
@@ -92,7 +100,7 @@ public class CityGrid {
             //the X and Y values cannot be equal to grid.length because arrays start from value 0 that's why it may throw arrayindexoutofbounds exception
 
             if (!visited[nextX][nextY] && grid[nextX][nextY] instanceof Zone) {
-                //we call Zone instead of targetZone because there may be more than one sourceZone, and we only call one of them at the beginning
+                //we call objectville.zones.Zone instead of targetZone because there may be more than one sourceZone, and we only call one of them at the beginning
                 queue.add(grid[nextX][nextY]);
                 visited[nextX][nextY] = true;
             }
