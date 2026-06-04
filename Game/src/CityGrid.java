@@ -30,8 +30,8 @@ public class CityGrid {
                     int radius = 0;
 
                     if (symbol == 'F') radius = 5; // Police station (security)
-                    if (symbol == 'D') radius = 3; // Hospital (health)
-                    if (symbol == 'S') radius = 4; // School (education)
+                    if (symbol == 'D') radius = 3; // services.Hospital (health)
+                    if (symbol == 'S') radius = 4; // services.School (education)
 
                     if (radius > 0) {
                         for (int x = 0; x < grid.length; x++) { //x coordinate for targetZone
