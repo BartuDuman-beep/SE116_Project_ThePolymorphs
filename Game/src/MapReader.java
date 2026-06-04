@@ -1,5 +1,3 @@
-
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,20 +41,13 @@ public class MapReader {
 
             if (line.length() != cols) {
                 throw new IOException(
-                        "Line " + (row + 1) +
-                                " has a different length."
+                        "Line " + (row + 1) + "has a different length."
                 );
             }
 
             for (int col = 0; col < cols; col++) {
 
                 char symbol = line.charAt(col);
-
-                /*
-                 * DİKKAT:
-                 * x = sütun
-                 * y = satır
-                 */
                 grid[row][col] =
                         createCell(col, row, symbol);
             }
@@ -101,8 +92,7 @@ public class MapReader {
 
             default:
                 throw new IllegalArgumentException(
-                        "Invalid character in map: "
-                                + symbol
+                        "Invalid character in map: " + symbol
                 );
         }
         }
