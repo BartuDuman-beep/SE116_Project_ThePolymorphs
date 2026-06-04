@@ -3,7 +3,7 @@ package objectville.utilities;
 
 import objectville.city.Cell;
 
-public abstract class UtilityBuilding extends Cell implements UtilityProvider {
+public abstract class UtilityBuilding extends Cell {
     private int capacity;
     private int remainingCapacity;
 
@@ -25,7 +25,7 @@ public abstract class UtilityBuilding extends Cell implements UtilityProvider {
     public int getRemainingCapacity() {
         return remainingCapacity;
     }
-    @Override
+
     public void consume(int amount){
         if (amount>remainingCapacity) {
             remainingCapacity = 0;
@@ -33,12 +33,9 @@ public abstract class UtilityBuilding extends Cell implements UtilityProvider {
             remainingCapacity-=amount;
         }
     }
-    @Override
+
     public void reset(){
         remainingCapacity=capacity;
     }
-
-
-
 }
 
