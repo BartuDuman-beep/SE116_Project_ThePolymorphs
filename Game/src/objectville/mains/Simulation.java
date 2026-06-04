@@ -15,11 +15,10 @@ public class Simulation {
         this.citygrid = citygrid;
     }
 
-
     public void runTick() {
+
         for (int i = 0; i < totalTicks; i++) {
             System.out.println("Tick" + (i + 1));
-
 
             citygrid.distributeServices();
 
@@ -35,6 +34,8 @@ public class Simulation {
                     if (grid[x][y] instanceof Zone zone) {
 
                         zone.updateLevel();
+
+                        zone.calculateOutput();
 
                         zone.resetReceivedValues();
                         //reseting the values that come from the previous tour
