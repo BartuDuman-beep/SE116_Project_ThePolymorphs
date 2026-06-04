@@ -42,6 +42,9 @@ public class Housing extends Zone {
         } else {
             output = (2 * m) + lifestyle;
         }
+        if(output > 0){
+            System.out.println("House at ("+getX()+","+getY()+ ") generated "+output+" population");
+        }
     }
 }
 

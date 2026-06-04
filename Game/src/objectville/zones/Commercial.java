@@ -43,5 +43,8 @@ public class Commercial extends Zone {
         } else {
             output = (2 * m) + Math.min(population, goods);
         }
+        if(output > 0){
+            System.out.println("Commercial at ("+getX()+","+getY()+ ") generated "+output+" lifestyle");
+        }
     }
 }

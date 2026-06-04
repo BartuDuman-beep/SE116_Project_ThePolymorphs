@@ -42,5 +42,8 @@ public class Industrial extends Zone {
         } else {
             output = (2 * m) + population;
         }
+        if(output > 0){
+            System.out.println("Industrial at ("+getX()+","+getY()+ ") generated "+output+" goods");
+        }
     }
 }
