@@ -52,17 +52,21 @@ public class CityGrid {
                                 if (grid[x][y] instanceof Zone targetZone) {
 
                                     int distance = Math.abs(i - x) + Math.abs(j - y); // Manhattan distance
-
+                                    String zoneName = sourceZone.getClass().getSimpleName();
+                                    if(zoneName.equals("Housing")) zoneName = "House";
                                     if (distance <= radius) {
                                         switch (symbol) {
                                             case 'F':
                                                 targetZone.setSecurity(true);
+                                                System.out.println(zoneName+" at ("+x+","+y+") received security service");
                                                 break;
                                             case 'D':
                                                 targetZone.setHealth(true);
+                                                System.out.println(zoneName+" at ("+x+","+y+") received health service");
                                                 break;
                                             case 'S':
                                                 targetZone.setEducation(true);
+                                                System.out.println(zoneName+" at ("+x+","+y+") received education service");
                                                 break;
                                         }
                                     }
