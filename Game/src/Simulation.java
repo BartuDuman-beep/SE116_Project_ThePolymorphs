@@ -21,5 +21,24 @@ public class Simulation {
                 }
             }
         }
+        citygrid.distributeServices();
+
+        citygrid.distributeUtilities ();
+
+        citygrid.accumulateProduction();
+
+        citygrid.distributeResources(0, 0, 0, 0, 0, 0);
+        //these functions are inside 2 for loops in the citygrid class so we do not need extra 2 for loops
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+
+                if (grid[i][j] instanceof Zone zone) {
+
+                    zone.updateLevel();
+                }
+            }
+        }
+        currentTick++;
     }
 }
