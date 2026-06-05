@@ -19,6 +19,7 @@ public class Main {
             CityGrid cityGrid = new CityGrid(grid);
             Simulation simulation = new Simulation(grid, cityGrid);
             for (int t = 0; t < totalTicks; t++) {
+                System.out.println("Tick: " + (t +1));
                 simulation.runTick();
             }
 
