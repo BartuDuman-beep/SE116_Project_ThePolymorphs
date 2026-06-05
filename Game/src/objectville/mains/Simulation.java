@@ -2,13 +2,19 @@ package objectville.mains;
 
 import objectville.city.Cell;
 import objectville.city.CityGrid;
+import objectville.utilities.UtilityBuilding;
 import objectville.zones.Zone;
 
 public class Simulation {
     private Cell[][] grid;
-    private int totalTicks;
     private CityGrid citygrid;
-    //to call methods that are in citygrid, we should define it as an object here!
+
+    private int TotalPopulation;
+    private int TotalGoods;
+    private int TotalLifestyle;
+    private int HouseCount;
+    private int CommercialCount;
+    private int IndustrialCount;
 
     public Simulation(Cell[][] grid, CityGrid citygrid) {
         this.grid = grid;
@@ -17,16 +23,20 @@ public class Simulation {
 
     public void runTick() {
 
-        for (int i = 0; i < totalTicks; i++) {
-            System.out.println("Tick" + (i + 1));
-
+        for(int i = 0; i < grid.length; i++ ){
+            for(int j = 0; j < grid[i].length; j++ ){
+                if (grid[i][j] instanceof UtilityBuilding utility) {
+                        utility.reset();
+                    }
+                }
+            }
             citygrid.distributeServices();
 
             citygrid.distributeUtilities();
 
             citygrid.accumulateProduction();
 
-            //these functions are inside 2 for loops in the citygrid class so we do not need extra 2 for loops
+            citygrid.distributeResources(TotalPopulation, TotalGoods, TotalLifestyle, HouseCount, IndustrialCount, CommercialCount);
 
             for (int x = 0; x < grid.length; x++) {
                 for (int y = 0; y < grid[0].length; y++) {
@@ -44,5 +54,5 @@ public class Simulation {
             }
         }
     }
-}
+
 
