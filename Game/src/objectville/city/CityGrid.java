@@ -137,16 +137,25 @@ public class CityGrid {
 
                     if (utilityType.equals("electricity")) {
                         targetZone.receiveElectricity(assignedUtility);
+                        provider.consume(assignedUtility);
+
                         System.out.println(zoneName+" at ("+targetZone.getX()+","+targetZone.getY()+") received "+assignedUtility+" electricity");
+
                     } else if (utilityType.equals("water")) {
                         targetZone.receiveWater(assignedUtility);
+                        provider.consume(assignedUtility);
+
                         System.out.println(zoneName+" at ("+targetZone.getX()+","+targetZone.getY()+") received "+assignedUtility+" water");
+
                     } else if (utilityType.equals("internet")) {
+                        if (!(targetZone instanceof Industrial));
+
                         targetZone.receiveInternet(assignedUtility);
+                        provider.consume(assignedUtility);
+
                         System.out.println(zoneName+" at ("+targetZone.getX()+","+targetZone.getY()+") received "+assignedUtility+" internet");
 
                     }
-                    provider.consume(assignedUtility);
                 }
 
             }
