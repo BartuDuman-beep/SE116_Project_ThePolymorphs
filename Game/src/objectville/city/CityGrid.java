@@ -183,9 +183,8 @@ public class CityGrid {
             }
             distributeResources(totalPopulation, totalGoods, totalLifestyle, houseCount, industrialCount, commercialCount);
         }
-        public void distributeResources ( int totalPopulation, int totalGoods, int totalLifestyle, int houseCount,
-        int industrialCount, int commercialCount){
-
+        public void distributeResources (int totalPopulation, int totalGoods, int totalLifestyle, int houseCount,
+        int industrialCount, int commercialCount) {
             int distributePopulation = (industrialCount + commercialCount > 0) ? (totalPopulation / (industrialCount + commercialCount)) : 0;
             // in case of not having any house zone, result will be zero, to prevent denominator being zero
             int distributeGoods = (commercialCount > 0) ? (totalGoods / commercialCount) : 0;
@@ -210,5 +209,6 @@ public class CityGrid {
             }
     }
 }
+
 
 
