@@ -148,13 +148,13 @@ public class CityGrid {
                         System.out.println(zoneName+" at ("+targetZone.getX()+","+targetZone.getY()+") received "+assignedUtility+" water");
 
                     } else if (utilityType.equals("internet")) {
-                        if (!(targetZone instanceof Industrial));
+                        if (!(targetZone instanceof Industrial)) {
 
-                        targetZone.receiveInternet(assignedUtility);
-                        provider.consume(assignedUtility);
+                            targetZone.receiveInternet(assignedUtility);
+                            provider.consume(assignedUtility);
 
-                        System.out.println(zoneName+" at ("+targetZone.getX()+","+targetZone.getY()+") received "+assignedUtility+" internet");
-
+                            System.out.println(zoneName + " at (" + targetZone.getX() + "," + targetZone.getY() + ") received " + assignedUtility + " internet");
+                        }
                     }
                 }
 
